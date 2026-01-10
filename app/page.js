@@ -6,7 +6,22 @@ import { Check, School, Rocket, Sparkles, Infinity, Hourglass } from "lucide-rea
 
 export default function Page() {
   const [focus, setFocus] = useState(null);
-  const markers = focus ? [{ location: focus, size: 0.1 }] : [];
+  const markers = focus
+    ? [
+        {
+          location: focus,
+          size: 0.2,
+          color: [0.3, 0.85, 1],
+        },
+      ]
+    : [];
+  const events = [
+    { id: 1, date: "Q1 2026", title: "First Prototype", description: "Initial release of the Blueberry learning platform engine.", highlight: false },
+    { id: 2, date: "Q2 2026", title: "First Beta Test", description: "Closed beta with partner universities in Germany.", highlight: false },
+    { id: 3, date: "Q3 2026", title: "Go Public", description: "Official launch for all students and public course creators.", highlight: false },
+    { id: 4, date: "Q4 2026", title: "Expansion", description: "Scaling to European universities and introducing mobile app.", highlight: false },
+    { id: 5, date: "Q1 2027", title: "Mobile App", description: "Something special is coming for the world.", highlight: true },
+  ];
 
   return (
     <div className="relative flex h-screen w-full flex-col overflow-y-auto overflow-x-hidden bg-black text-white selection:bg-blue-500/30">
@@ -40,17 +55,49 @@ export default function Page() {
             Made in Germany
           </div>
 
-          {/* Blueberry Logo (Scaled Up) */}
-          <div className="mb-8 flex items-center justify-center transform hover:scale-105 transition-transform duration-500">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="300" height="60">
-                <g transform="translate(4, 5)">
-                    <polygon points="15,2 20,5.5 20,12.5 15,16 10,12.5 10,5.5" fill="none" stroke="#ffffff" strokeWidth="1.4" strokeLinejoin="round"/>
-                    <polygon points="8,14 13,17.5 13,24.5 8,28 3,24.5 3,17.5" fill="none" stroke="#ffffff" strokeWidth="1.4" strokeLinejoin="round"/>
-                    <polygon points="22,14 27,17.5 27,24.5 22,28 17,24.5 17,17.5" fill="#ffffff" stroke="#ffffff" strokeWidth="1.4" strokeLinejoin="round"/>
-                    <path d="M 15 2 C 15 -1, 16 -2, 19 -3" fill="none" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round"/>
+          {/* New Blueberry Logo (Centered & Balanced) */}
+          <div className="mb-12 flex items-center justify-center transform hover:scale-105 transition-transform duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="300" height="60">
+                <g transform="translate(12, 5)">
+                    <polygon 
+                    points="15,2 20,5.5 20,12.5 15,16 10,12.5 10,5.5" 
+                    fill="none" 
+                    stroke="#ffffff" 
+                    strokeWidth="1.4"
+                    strokeLinejoin="round"
+                    />
+                    <polygon 
+                    points="8,14 13,17.5 13,24.5 8,28 3,24.5 3,17.5" 
+                    fill="none" 
+                    stroke="#ffffff" 
+                    strokeWidth="1.4"
+                    strokeLinejoin="round"
+                    />
+                    <polygon 
+                    points="22,14 27,17.5 27,24.5 22,28 17,24.5 17,17.5" 
+                    fill="#ffffff"
+                    stroke="#ffffff" 
+                    strokeWidth="1.4"
+                    strokeLinejoin="round"
+                    />
+                    <path 
+                    d="M 15 2 C 15 -1, 16 -2, 19 -3" 
+                    fill="none" 
+                    stroke="#ffffff" 
+                    strokeWidth="1.2" 
+                    strokeLinecap="round"
+                    />
                     <circle cx="19.5" cy="-3" r="1.2" fill="#ffffff"/>
                 </g>
-                <text x="44" y="26" fontFamily="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif" fontSize="20" fontWeight="600" fill="#ffffff" letterSpacing="-0.5">Blueberry</text>
+                <text 
+                    x="52" 
+                    y="26" 
+                    fontFamily="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif"
+                    fontSize="20"
+                    fontWeight="600"
+                    fill="#ffffff"
+                    letterSpacing="-0.5"
+                >Blueberry</text>
             </svg>
           </div>
 
@@ -133,7 +180,7 @@ export default function Page() {
                     Coding for <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">Everyone</span>
                 </h2>
                 <p className="text-xl text-zinc-300 leading-relaxed max-w-2xl mx-auto">
-                    Auch wenn du kein Student bist, kannst du uns nutzen. Wir sind eine Code-Learning-Plattform mit Challenges und Lernpfaden für alle – unser Hauptfokus ist es, jedem Programmieren beizubringen.
+                    Even if you're not a student, you can use Blueberry. We are a code-learning platform with challenges and learning paths for everyone – our main focus is to teach programming to anyone.
                 </p>
                 <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm font-bold uppercase tracking-widest text-zinc-500">
                     <span>Self-Learners</span>
@@ -273,7 +320,7 @@ export default function Page() {
       </section>
       
       {/* Timeline Section */}
-      <section className="flex min-h-screen w-full snap-start flex-col items-center justify-center bg-black/80 px-4 pt-32 pb-64 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
+      <section className="flex w-full snap-start flex-col items-center justify-center bg-black/80 px-4 py-32 pb-48 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
         <div className="max-w-5xl w-full">
             <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-24">
                 Roadmap to Excellence
@@ -281,109 +328,38 @@ export default function Page() {
 
             <div className="relative">
                 {/* Central Line */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-600 via-purple-600 to-emerald-600 opacity-50" />
+                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600/30" />
 
                 <div className="flex flex-col gap-24 relative">
-                    {/* Q1 2026 */}
-                    <div className="flex items-center justify-between w-full flex-row-reverse">
-                        <div className="w-5/12 flex justify-start">
-                            <span className="text-sm font-bold tracking-wider text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full">
-                                Q1 2026
-                            </span>
-                        </div>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                            <div className="w-4 h-4 rounded-full border-2 bg-black border-blue-500" />
-                        </div>
-                        <div className="w-5/12 text-right">
-                            <div className="p-6 rounded-2xl border bg-zinc-900/40 border-zinc-800 hover:border-blue-500/30 transition-colors">
-                                <h3 className="text-lg font-bold mb-2 text-white">First Prototype</h3>
-                                <p className="text-sm leading-relaxed text-zinc-400">
-                                    Initial release of the Blueberry learning platform engine.
-                                </p>
+                    {events.map((event, index) => (
+                        <div key={event.id} className={`flex items-center justify-between w-full ${index % 2 === 0 ? "flex-row-reverse" : ""}`}>
+                            
+                            {/* Date Label (Opposite side) */}
+                            <div className={`w-5/12 flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}>
+                                <span className={`text-sm font-bold tracking-wider ${event.highlight ? "bg-white text-black px-3 py-1 rounded-full shadow-lg" : "text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full"}`}>
+                                    {event.date}
+                                </span>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Q2 2026 */}
-                    <div className="flex items-center justify-between w-full">
-                        <div className="w-5/12 flex justify-end">
-                            <span className="text-sm font-bold tracking-wider text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full">
-                                Q2 2026
-                            </span>
-                        </div>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                            <div className="w-4 h-4 rounded-full border-2 bg-black border-purple-500" />
-                        </div>
-                        <div className="w-5/12 text-left">
-                            <div className="p-6 rounded-2xl border bg-zinc-900/40 border-zinc-800 hover:border-purple-500/30 transition-colors">
-                                <h3 className="text-lg font-bold mb-2 text-zinc-200">First Beta Test</h3>
-                                <p className="text-sm leading-relaxed text-zinc-500">
-                                    Closed beta with partner universities in Germany.
-                                </p>
+                            {/* Center Dot */}
+                            <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+                                <div className={`w-4 h-4 rounded-full border-2 ${event.highlight ? "bg-white border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]" : "bg-black border-blue-600"}`} />
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Q3 2026 */}
-                    <div className="flex items-center justify-between w-full flex-row-reverse">
-                        <div className="w-5/12 flex justify-start">
-                            <span className="text-sm font-bold tracking-wider text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full">
-                                Q3 2026
-                            </span>
-                        </div>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                            <div className="w-4 h-4 rounded-full border-2 bg-black border-purple-500" />
-                        </div>
-                        <div className="w-5/12 text-right">
-                            <div className="p-6 rounded-2xl border bg-zinc-900/40 border-zinc-800 hover:border-purple-500/30 transition-colors">
-                                <h3 className="text-lg font-bold mb-2 text-zinc-200">Go Public</h3>
-                                <p className="text-sm leading-relaxed text-zinc-500">
-                                    Official launch for all students and public course creators.
-                                </p>
+                            {/* Content Card */}
+                            <div className="w-5/12">
+                                <div className={`p-6 rounded-2xl border ${event.highlight ? "bg-zinc-900 border-blue-500/30 shadow-2xl shadow-blue-900/10" : "bg-zinc-900/40 border-zinc-800"}`}>
+                                    <h3 className={`text-lg font-bold mb-2 ${event.highlight ? "text-white" : "text-zinc-200"}`}>
+                                        {event.title}
+                                    </h3>
+                                    <p className={`text-sm leading-relaxed ${event.highlight ? "text-zinc-400" : "text-zinc-500"}`}>
+                                        {event.description}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Q4 2026 */}
-                    <div className="flex items-center justify-between w-full">
-                        <div className="w-5/12 flex justify-end">
-                            <span className="text-sm font-bold tracking-wider text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full">
-                                Q4 2026
-                            </span>
                         </div>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                            <div className="w-4 h-4 rounded-full border-2 bg-black border-emerald-500" />
-                        </div>
-                        <div className="w-5/12 text-left">
-                            <div className="p-6 rounded-2xl border bg-zinc-900/40 border-zinc-800 hover:border-emerald-500/30 transition-colors">
-                                <h3 className="text-lg font-bold mb-2 text-zinc-200">Expansion</h3>
-                                <p className="text-sm leading-relaxed text-zinc-500">
-                                    Scaling to European universities and introducing mobile app.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Q1 2027 */}
-                    <div className="flex items-center justify-between w-full flex-row-reverse">
-                        <div className="w-5/12 flex justify-start">
-                            <span className="text-sm font-bold tracking-wider bg-white text-black px-3 py-1 rounded-full shadow-lg">
-                                Q1 2027
-                            </span>
-                        </div>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                            <div className="w-4 h-4 rounded-full border-2 bg-white border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
-                        </div>
-                        <div className="w-5/12 text-right">
-                            <div className="p-6 rounded-2xl border bg-zinc-900/80 border-blue-500/30 shadow-2xl shadow-blue-900/10">
-                                <h3 className="text-lg font-bold mb-2 text-white">Mobile App</h3>
-                                <p className="text-sm leading-relaxed text-zinc-400">
-                                    <strong>Something Special is going to come for the World</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
+                    ))}
                 </div>
             </div>
         </div>
