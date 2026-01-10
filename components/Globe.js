@@ -17,9 +17,17 @@ export function Globe({ className, focus, markers }) {
   useEffect(() => {
     let phi = 0;
     let width = 0;
+    
+    if (!canvasRef.current) return;
+
     const onResize = () => canvasRef.current && (width = canvasRef.current.offsetWidth);
     window.addEventListener('resize', onResize);
     onResize();
+
+    if (width === 0) {
+        // Fallback or retry if width is 0 (hidden element)
+        width = 600;
+    }
 
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: 2,
