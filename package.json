@@ -20,6 +20,8 @@
     "@editorjs/list": "^2.0.9",
     "@editorjs/marker": "^1.4.0",
     "@editorjs/paragraph": "^2.11.7",
+    "@giphy/js-fetch-api": "^5.7.0",
+    "@giphy/react-components": "^10.1.1",
     "@heroui/breadcrumbs": "^2.2.24",
     "@heroui/button": "^2.2.29",
     "@heroui/card": "^2.2.27",
@@ -31,6 +33,7 @@
     "@heroui/system": "^2.4.25",
     "@heroui/tabs": "^2.2.26",
     "@heroui/theme": "^2.4.25",
+    "@heroui/toast": "^2.0.19",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-separator": "^1.1.8",
@@ -47,6 +50,7 @@
     "react-dom": "19.2.3",
     "react-resizable-panels": "^2.0.2",
     "recharts": "^3.6.0",
+    "styled-components": "^6.3.5",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

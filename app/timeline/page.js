@@ -61,7 +61,7 @@ export default function TimelinePage() {
                     separator: "text-zinc-700"
                 }}
               >
-                <BreadcrumbItem>Platform</BreadcrumbItem>
+                <BreadcrumbItem href="/dashboard">Dashboard</BreadcrumbItem>
                 <BreadcrumbItem>Timeline</BreadcrumbItem>
               </Breadcrumbs>
         </header>

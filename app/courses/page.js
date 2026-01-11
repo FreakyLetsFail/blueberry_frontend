@@ -66,7 +66,7 @@ export default function CoursesPage() {
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
       <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       
-      <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
+      <main className="flex-1 h-full overflow-y-auto flex flex-col relative bg-[#050505]">
         <header className="h-14 border-b border-zinc-900 flex items-center px-3 sm:px-4 gap-3 bg-zinc-950/50 backdrop-blur-sm sticky top-0 z-10">
             <SidebarTrigger onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
             <div className="h-4 w-[1px] bg-zinc-800" />
@@ -85,8 +85,8 @@ export default function CoursesPage() {
               </Breadcrumbs>
         </header>
 
-        <div className="p-4 sm:p-8 max-w-4xl mx-auto w-full">
-            <header className="mb-8 sm:mb-10 text-center sm:text-left">
+        <div className="p-6 max-w-7xl mx-auto w-full">
+            <header className="mb-8 text-center sm:text-left">
                 <h1 className="text-3xl font-bold mb-1 tracking-tight">Your Courses</h1>
                 <p className="text-zinc-500">Manage and access your enrolled courses.</p>
             </header>

@@ -2,9 +2,9 @@
 import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { PageTopBar } from "../../components/PageTopBar";
 import { useState } from "react";
-import { Breadcrumbs, BreadcrumbItem, Button, Input } from "@heroui/react";
+import { BreadcrumbItem, Button, Input } from "@heroui/react";
 import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
-import { Coins, Trophy, Users, Copy, Check, UserPlus } from "lucide-react";
+import { Coins, Users, Copy, Check, UserPlus } from "lucide-react";
 
 const data = [
   { name: 'Mon', value: 35 },
@@ -27,7 +27,7 @@ const CustomDot = (props) => {
 };
 
 export default function Dashboard() {
-  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState(true, false);
   const [copied, setCopied] = useState(false);
   const [friendId, setFriendId] = useState("");
   const userId = "USR-7X9K2M4P";
@@ -40,7 +40,6 @@ export default function Dashboard() {
 
   const addFriend = () => {
     if (friendId.trim()) {
-      // Handle adding friend logic here
       console.log("Adding friend:", friendId);
       setFriendId("");
     }
@@ -51,21 +50,21 @@ export default function Dashboard() {
       <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       {/* Main Content Area */}
-      <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
+      <main className="flex-1 h-full overflow-y-auto flex flex-col relative bg-[#050505]">
 
           <PageTopBar
             left={<SidebarTrigger onClick={() => setIsSidebarOpen(!isSidebarOpen)} />}
             breadcrumbs={
               <>
-                <BreadcrumbItem>Platform</BreadcrumbItem>
+                <BreadcrumbItem href="/dashboard">Platform</BreadcrumbItem>
                 <BreadcrumbItem>Dashboard</BreadcrumbItem>
               </>
             }
             className="z-10"
           />
 
-          <div className="p-4 sm:p-8">
-            <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 sm:mb-10">
+          <div className="p-6 max-w-7xl mx-auto w-full">
+            <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
                 <div>
                     <h1 className="text-3xl font-bold mb-1 tracking-tight">Welcome back, Justus</h1>
                     <p className="text-zinc-500">Here's your learning overview for today.</p>
@@ -82,11 +81,36 @@ export default function Dashboard() {
                 </div>
             </header>
 
+            {/* Quick Actions / Continue Learning */}
+            <div className="mb-8 p-6 rounded-xl border border-zinc-800 bg-zinc-900/30 flex flex-col sm:flex-row items-center justify-between gap-6 hover:border-zinc-700 transition-colors">
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <div className="w-12 h-12 rounded-xl bg-blue-600/20 flex items-center justify-center text-blue-500 border border-blue-500/30">
+                        <span className="font-bold text-lg">J</span>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-bold text-white">Java 101: Fundamentals</h3>
+                        <p className="text-sm text-zinc-400">Last active: <span className="text-zinc-300">Variables Part 1</span></p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <div className="flex-1 sm:flex-none h-2 w-32 bg-zinc-800 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-500 w-[65%]" />
+                    </div>
+                    <span className="text-xs font-bold text-zinc-500">65%</span>
+                    <Button 
+                        className="bg-white text-black font-bold px-6 rounded-lg ml-2"
+                        size="sm"
+                    >
+                        Continue
+                    </Button>
+                </div>
+            </div>
+
             {/* Grid Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* Left Column: Weekly Progress */}
-                <div className="lg:col-span-2 bg-zinc-900/40 border border-white/5 rounded-xl p-6 relative overflow-hidden min-w-0">
+                <div className="lg:col-span-2 bg-zinc-900/40 border border-white/5 rounded-xl p-6 relative overflow-hidden min-w-0 h-full">
                     <h3 className="text-sm font-medium mb-8 text-zinc-400">Weekly Progress</h3>
                     <div className="relative h-64 w-full min-w-0">
                         <ResponsiveContainer width="100%" height="100%">
@@ -117,116 +141,47 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                {/* Right Column: Achievements & Friends */}
-                <div className="flex flex-col gap-6">
-                    {/* Card 2: Daily Achievements */}
-                    <div className="bg-zinc-900/40 border border-white/5 rounded-xl p-6 flex flex-col">
-                        <div className="flex justify-between items-center mb-6">
-                            <h3 className="text-sm font-medium text-zinc-400">Daily Achievements</h3>
-                        </div>
-
-                        <div className="flex flex-col gap-6">
-                            {/* Goal 1 */}
-                            <div className="flex flex-col gap-2">
-                                <div className="flex justify-between text-sm">
-                                    <span className="font-medium text-zinc-300">Challenges</span>
-                                    <span className="text-zinc-500">1/3</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div className="h-full bg-blue-500 w-1/3 rounded-full" />
-                                </div>
-                                <p className="text-xs text-zinc-500 mt-0.5">Solve 3 challenges first try</p>
-                            </div>
-
-                            {/* Goal 2 */}
-                            <div className="flex flex-col gap-2">
-                                <div className="flex justify-between text-sm">
-                                    <span className="font-medium text-zinc-300">XP Earned</span>
-                                    <span className="text-zinc-500">60/180</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div className="h-full bg-purple-500 w-1/3 rounded-full" />
-                                </div>
-                                <p className="text-xs text-zinc-500 mt-0.5">Earn 180 XP today</p>
-                            </div>
-
-                            {/* Goal 3 */}
-                            <div className="flex flex-col gap-2">
-                                <div className="flex justify-between text-sm">
-                                    <span className="font-medium text-zinc-300">Exercises</span>
-                                    <span className="text-zinc-500">1/8</span>
-                                </div>
-                                <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 w-[12%] rounded-full" />
-                                </div>
-                                <p className="text-xs text-zinc-500 mt-0.5">Complete 8 practice sets</p>
-                            </div>
-                        </div>
+                {/* Right Column: Achievements */}
+                <div className="bg-zinc-900/40 border border-white/5 rounded-xl p-6 flex flex-col h-full">
+                    <div className="flex justify-between items-center mb-6 text-zinc-400">
+                        <h3 className="text-sm font-medium">Daily Achievements</h3>
                     </div>
 
-                    {/* Connect with Friends */}
-                    <div className="bg-zinc-900/40 border border-white/5 rounded-xl p-6 flex flex-col">
-                        <div className="flex items-center gap-2 mb-6">
-                            <Users size={16} className="text-emerald-500" />
-                            <h3 className="text-sm font-medium text-zinc-400">Connect with Friends</h3>
+                    <div className="flex flex-col gap-6 flex-1 justify-center">
+                        {/* Goal 1 */}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex justify-between text-sm">
+                                <span className="font-medium text-zinc-300">Challenges</span>
+                                <span className="text-zinc-500">1/3</span>
+                            </div>
+                            <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                                <div className="h-full bg-blue-500 w-1/3 rounded-full" />
+                            </div>
+                            <p className="text-xs text-zinc-500 mt-0.5">Solve 3 challenges first try</p>
                         </div>
 
-                        <div className="flex flex-col gap-6 flex-1">
-                            {/* Your ID */}
-                            <div>
-                                <label className="text-xs font-medium text-zinc-500 mb-2 block">Your ID</label>
-                                <div className="flex items-center gap-2">
-                                    <div className="flex-1 bg-zinc-800/50 border border-zinc-700 rounded-lg px-3 py-2.5 font-mono text-sm text-zinc-300">
-                                        {userId}
-                                    </div>
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        variant="flat"
-                                        className={`h-10 w-10 min-w-10 ${copied ? 'bg-emerald-500/20 text-emerald-400' : 'bg-zinc-800 text-zinc-400 hover:text-white'}`}
-                                        onPress={copyUserId}
-                                    >
-                                        {copied ? <Check size={16} /> : <Copy size={16} />}
-                                    </Button>
-                                </div>
-                                <p className="text-xs text-zinc-600 mt-1.5">Share this ID with friends</p>
+                        {/* Goal 2 */}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex justify-between text-sm">
+                                <span className="font-medium text-zinc-300">XP Earned</span>
+                                <span className="text-zinc-500">60/180</span>
                             </div>
+                            <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                                <div className="h-full bg-purple-500 w-1/3 rounded-full" />
+                            </div>
+                            <p className="text-xs text-zinc-500 mt-0.5">Earn 180 XP today</p>
+                        </div>
 
-                            {/* Add Friend */}
-                            <div>
-                                <label className="text-xs font-medium text-zinc-500 mb-2 block">Add Friend</label>
-                                <div className="flex items-center gap-2">
-                                    <Input
-                                        placeholder="Paste friend's ID..."
-                                        variant="bordered"
-                                        size="sm"
-                                        value={friendId}
-                                        onValueChange={setFriendId}
-                                        classNames={{
-                                            inputWrapper: "bg-zinc-800/50 border-zinc-700 hover:border-zinc-600 h-10",
-                                            input: "font-mono text-sm",
-                                        }}
-                                    />
-                                    <Button
-                                        isIconOnly
-                                        size="sm"
-                                        className="bg-emerald-500 text-white h-10 w-10 min-w-10"
-                                        isDisabled={!friendId.trim()}
-                                        onPress={addFriend}
-                                    >
-                                        <UserPlus size={16} />
-                                    </Button>
-                                </div>
-                                <p className="text-xs text-zinc-600 mt-1.5">Enter a friend's ID to connect</p>
+                        {/* Goal 3 */}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex justify-between text-sm">
+                                <span className="font-medium text-zinc-300">Exercises</span>
+                                <span className="text-zinc-500">1/8</span>
                             </div>
-
-                            {/* Friends Count */}
-                            <div className="mt-4 pt-4 border-t border-zinc-800">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm text-zinc-500">Connected Friends</span>
-                                    <span className="text-lg font-bold text-white">4</span>
-                                </div>
+                            <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                                <div className="h-full bg-emerald-500 w-[12%] rounded-full" />
                             </div>
+                            <p className="text-xs text-zinc-500 mt-0.5">Complete 8 practice sets</p>
                         </div>
                     </div>
                 </div>
