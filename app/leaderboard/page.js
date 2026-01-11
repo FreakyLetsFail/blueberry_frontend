@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { PageTopBar } from "../../components/PageTopBar";
 import { BreadcrumbItem } from "@heroui/react";
 import { Trophy, Medal, Shield, Sparkles, Star, Crown } from "lucide-react";
@@ -22,7 +22,7 @@ const courseEntries = [
 ];
 
 export default function LeaderboardPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [activeTab, setActiveTab] = useState("league");
 
   const rows = activeTab === "league" ? leagueEntries : courseEntries;
@@ -36,7 +36,7 @@ export default function LeaderboardPage() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
         <PageTopBar

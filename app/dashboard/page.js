@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { PageTopBar } from "../../components/PageTopBar";
 import { useState } from "react";
 import { Breadcrumbs, BreadcrumbItem, Button, Input } from "@heroui/react";
@@ -27,7 +27,7 @@ const CustomDot = (props) => {
 };
 
 export default function Dashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [copied, setCopied] = useState(false);
   const [friendId, setFriendId] = useState("");
   const userId = "USR-7X9K2M4P";
@@ -48,7 +48,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       {/* Main Content Area */}
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
@@ -64,13 +64,13 @@ export default function Dashboard() {
             className="z-10"
           />
 
-          <div className="p-8">
-            <header className="flex justify-between items-center mb-10">
+          <div className="p-4 sm:p-8">
+            <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 sm:mb-10">
                 <div>
                     <h1 className="text-3xl font-bold mb-1 tracking-tight">Welcome back, Justus</h1>
                     <p className="text-zinc-500">Here's your learning overview for today.</p>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-3">
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-full text-orange-500">
                         <span>🔥</span>
                         <span className="text-sm font-bold">12 Day Streak</span>
@@ -86,9 +86,9 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
 
                 {/* Left Column: Weekly Progress */}
-                <div className="lg:col-span-2 bg-zinc-900/40 border border-white/5 rounded-xl p-6 relative overflow-hidden">
+                <div className="lg:col-span-2 bg-zinc-900/40 border border-white/5 rounded-xl p-6 relative overflow-hidden min-w-0">
                     <h3 className="text-sm font-medium mb-8 text-zinc-400">Weekly Progress</h3>
-                    <div className="relative h-64 w-full">
+                    <div className="relative h-64 w-full min-w-0">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={data} margin={{ top: 5, right: 30, bottom: 25, left: 30 }}>
                                 <CartesianGrid strokeDasharray="6 6" stroke="#27272a" vertical={false} />

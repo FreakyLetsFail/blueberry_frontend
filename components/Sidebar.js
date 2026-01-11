@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   Users, 
@@ -22,12 +22,60 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+// Defaults keep SSR markup consistent (open) and close on mobile after mount
+export const useResponsiveSidebarState = (initialDesktop = false, initialMobile = false) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(initialMobile); // SSR-safe default: closed
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handler = (e) => {
+      setIsMobile(e.matches);
+      setOpen(e.matches ? initialMobile : initialDesktop);
+    };
+    handler(mq);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [initialDesktop, initialMobile]);
+
+  return { open, setOpen, isMobile };
+};
+
+export const Sidebar = ({ open, onOpenChange, isMobile: forceMobile }) => {
+  const isControlled = typeof open === "boolean" && typeof onOpenChange === "function";
+  const [internalOpen, setInternalOpen] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !window.matchMedia("(max-width: 768px)").matches;
+  });
+  const [isMobile, setIsMobile] = useState(false);
+  const isOpen = isControlled ? open : internalOpen;
+  const setOpen = isControlled ? onOpenChange : setInternalOpen;
   const [isCoursesOpen, setIsCoursesOpen] = useState(true);
   const pathname = usePathname();
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleSidebar = () => setOpen(!isOpen);
+  const handleNavClick = () => {
+    if (isMobile) setOpen(false);
+  };
+
+  useEffect(() => {
+    if (isControlled) return;
+    const handler = () => setOpen((prev) => !prev);
+    window.addEventListener("sidebar-toggle", handler);
+    return () => window.removeEventListener("sidebar-toggle", handler);
+  }, [isControlled, setOpen]);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handler = (e) => {
+      setIsMobile(e.matches);
+      if (!isControlled) setOpen(!e.matches);
+    };
+    handler(mq);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [isControlled, setOpen]);
+
+  const mobile = typeof forceMobile === "boolean" ? forceMobile : isMobile;
 
   const groups = [
     {
@@ -46,12 +94,20 @@ export const Sidebar = () => {
   ];
 
   return (
-    <motion.div 
-      initial={{ width: isOpen ? 240 : 0, opacity: isOpen ? 1 : 0 }}
-      animate={{ width: isOpen ? 240 : 0, opacity: isOpen ? 1 : 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="h-screen bg-zinc-950 border-r border-zinc-900 flex flex-col overflow-hidden"
-    >
+    <>
+      {mobile && isOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+      <motion.div 
+        initial={{ width: isOpen ? 240 : 0, opacity: isOpen ? 1 : 0 }}
+        animate={{ width: isOpen ? 240 : 0, opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`h-screen bg-zinc-950 border-r border-zinc-900 flex flex-col overflow-hidden fixed md:static inset-y-0 left-0 z-50 ${!isOpen ? "pointer-events-none" : ""}`}
+        style={{ pointerEvents: isOpen ? "auto" : "none" }}
+      >
         {/* Header / Brand */}
         <div className="p-4 mb-2">
             <Link href="/dashboard" className="flex items-center justify-start p-2">
@@ -124,6 +180,7 @@ export const Sidebar = () => {
                                 <Link
                                     key={index}
                                     href={item.href}
+                                    onClick={handleNavClick}
                                     className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
                                         isActive 
                                             ? "bg-zinc-800 text-white" 
@@ -164,6 +221,7 @@ export const Sidebar = () => {
                                     <Link
                                         key={index}
                                         href={item.href}
+                                        onClick={handleNavClick}
                                         className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${
                                             isActive 
                                                 ? "bg-zinc-800 text-white" 
@@ -184,15 +242,15 @@ export const Sidebar = () => {
         {/* Bottom Actions */}
         <div className="px-4 py-2 mt-auto border-t border-zinc-900">
              <nav className="flex flex-col gap-0.5 mb-4">
-                <Link href="/timeline" className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/timeline' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
+                <Link href="/timeline" onClick={handleNavClick} className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/timeline' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
                     <History size={16} />
                     <span>Timeline</span>
                 </Link>
-                <Link href="/contact" className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/contact' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
+                <Link href="/contact" onClick={handleNavClick} className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/contact' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
                     <Send size={16} />
                     <span>Contact</span>
                 </Link>
-                <Link href="/settings" className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/settings' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
+                <Link href="/settings" onClick={handleNavClick} className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm transition-colors ${pathname === '/settings' ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-white hover:bg-zinc-900"}`}>
                     <Settings size={16} />
                     <span>Settings</span>
                 </Link>
@@ -209,13 +267,16 @@ export const Sidebar = () => {
                 <ChevronsUpDown size={14} className="text-zinc-500" />
             </button>
         </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 };
 
 export const SidebarTrigger = ({ onClick }) => (
     <button 
-        onClick={onClick}
+        onClick={(e) => {
+          if (onClick) onClick(e);
+        }}
         className="p-2 hover:bg-zinc-900 rounded-md text-zinc-400 hover:text-white transition-colors"
     >
         <PanelLeft size={20} />

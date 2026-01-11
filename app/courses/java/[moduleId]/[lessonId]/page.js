@@ -1,24 +1,28 @@
 "use client";
 import React, { useState, useRef } from "react";
-import { Sidebar, SidebarTrigger } from "../../../../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../../../../components/Sidebar";
 import Editor from "@monaco-editor/react";
-import {
-  Play,
-  RotateCcw,
-  ChevronLeft,
-  CheckCircle2,
+import { 
+  Play, 
+  RotateCcw, 
+  ChevronLeft, 
+  CheckCircle2, 
   AlertCircle,
   FileCode,
-  Terminal as TerminalIcon
+  Terminal as TerminalIcon,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { Button, ScrollShadow } from "@heroui/react";
 import Link from "next/link";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { useIsMobile } from "../../../../../hooks/use-mobile";
 
 export default function LessonIDEPage({ params }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Collapsed by default for more space
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState(true, false);
   const [output, setOutput] = useState("> Ready to run...");
   const [isRunning, setIsRunning] = useState(false);
+  const isMobile = useIsMobile();
   
   const lesson = {
     title: "1. Introduction to Java",
@@ -70,43 +74,48 @@ System.out.println("Hello World");`,
   };
 
   return (
-    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans justify-center">
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       
-      <main className="flex-1 flex flex-col relative h-full">
+      <main className="flex-1 flex flex-col relative h-full max-w-[440px] sm:max-w-none">
         
         {/* Top Header */}
         <header className="h-14 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between px-4 z-20 shrink-0">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 min-w-0 flex-1">
                 <SidebarTrigger onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
-                <div className="h-4 w-[1px] bg-zinc-800" />
-                <Link href="/courses/java/101" className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-sm">
+                <div className="h-4 w-[1px] bg-zinc-800 shrink-0" />
+                <Link href="/courses/java/101" className="text-zinc-400 hover:text-white transition-colors flex items-center gap-2 text-sm shrink-0">
                     <ChevronLeft size={16} />
-                    Back to Path
+                    <span className="hidden sm:inline">Back to Path</span>
                 </Link>
-                <div className="h-4 w-[1px] bg-zinc-800" />
-                <span className="text-sm font-semibold text-white">{lesson.title}</span>
+                <div className="h-4 w-[1px] bg-zinc-800 shrink-0 hidden sm:block" />
+                <span className="text-sm font-semibold text-white truncate min-w-0">{lesson.title}</span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0 ml-2">
                 <Button 
                     size="sm" 
-                    className="bg-blue-600 text-white font-bold"
+                    className="bg-blue-600 text-white font-bold px-3 min-w-0"
                     startContent={<Play size={16} fill="currentColor" />}
                     isLoading={isRunning}
                     onPress={runCode}
                 >
-                    Run Code
+                    <span className="hidden sm:inline">Run Code</span>
+                    <span className="sm:hidden">Run</span>
                 </Button>
             </div>
         </header>
 
         {/* IDE Layout: Resizable Panels */}
         <div className="flex-1 h-[calc(100vh-56px)] overflow-hidden">
-            <PanelGroup direction="horizontal">
+            <PanelGroup direction={isMobile ? "vertical" : "horizontal"}>
                 
-                {/* LEFT PANEL: Content */}
-                <Panel defaultSize={25} minSize={15} collapsible={true} className="bg-zinc-950 flex flex-col border-r border-zinc-800">
+                {/* FIRST PANEL: Content */}
+                <Panel defaultSize={isMobile ? 25 : 25} minSize={12} collapsible={true} className="bg-zinc-950 flex flex-col border-r border-zinc-800">
+                    <div className="flex items-center justify-between px-4 py-2 border-b border-zinc-800/50 bg-zinc-900/20">
+                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Lesson Guide</span>
+                        {/* Note: Actual collapsing via button requires a ref to the panel API, omitting for simplicity unless requested, resizing handle is primary */}
+                    </div>
                     <ScrollShadow className="flex-1 p-6 h-full">
                         <div className="mb-8">
                             <h2 className="text-xl font-bold mb-4">Introduction</h2>
@@ -129,10 +138,10 @@ System.out.println("Hello World");`,
                     </ScrollShadow>
                 </Panel>
 
-                <PanelResizeHandle className="w-1 bg-zinc-900 hover:bg-blue-600 transition-colors" />
+                <PanelResizeHandle className={`bg-zinc-900 hover:bg-blue-600 transition-colors ${isMobile ? "h-1 w-full" : "w-1 h-full"}`} />
 
-                {/* RIGHT PANEL: Editor & Console */}
-                <Panel defaultSize={75} minSize={30}>
+                {/* SECOND PANEL: Editor & Console */}
+                <Panel defaultSize={isMobile ? 75 : 80} minSize={40}>
                     <PanelGroup direction="vertical">
                         
                         {/* TOP: Editor */}
@@ -155,7 +164,7 @@ System.out.println("Hello World");`,
                                         minimap: { enabled: false },
                                         scrollBeyondLastLine: false,
                                         automaticLayout: true,
-                                        padding: { top: 16 },
+                                        padding: { top: 16, bottom: 16 },
                                         fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
                                     }}
                                 />

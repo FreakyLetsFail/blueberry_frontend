@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../../components/Sidebar";
 import { useState, useEffect, useRef, useId } from "react";
 import {
   Breadcrumbs,
@@ -594,7 +594,7 @@ function SortableLessonItem({ lesson, chapterId, onUpdate, onRemove, onPreview, 
 }
 
 export default function CreateCoursePage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState(true, false);
   const [courseName, setCourseName] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [courseLanguage, setCourseLanguage] = useState("java");
@@ -754,7 +754,7 @@ export default function CreateCoursePage() {
         }
       `}</style>
 
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       <main className="flex-1 flex flex-col relative h-full">
         {/* Header */}

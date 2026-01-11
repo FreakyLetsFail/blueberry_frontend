@@ -24,7 +24,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="relative flex h-screen w-full flex-col overflow-y-auto overflow-x-hidden bg-black text-white selection:bg-blue-500/30">
+    <div className="relative flex min-h-screen w-full flex-col overflow-y-auto overflow-x-hidden bg-black text-white selection:bg-blue-500/30">
       
       {/* Global Grid Background */}
       <div 
@@ -40,7 +40,7 @@ export default function Page() {
       />
 
       {/* Hero Section */}
-      <div className="relative flex min-h-screen w-full snap-start flex-col items-center justify-center pt-32 pb-48 z-10">
+      <div className="relative flex min-h-screen w-full flex-col items-center justify-center pt-28 pb-32 sm:pt-32 sm:pb-48 z-10">
         
         {/* Glow Effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
@@ -101,25 +101,25 @@ export default function Page() {
             </svg>
           </div>
 
-          <h1 className="max-w-5xl text-5xl font-bold tracking-tight sm:text-7xl mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500 leading-tight">
+          <h1 className="max-w-5xl text-[34px] sm:text-5xl lg:text-7xl font-bold tracking-tight mb-8 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500 leading-tight">
             Academic Excellence meets <br />
             <span className="text-blue-500">Gamified Learning</span>
           </h1>
           
-          <p className="mt-4 text-xl leading-8 text-zinc-400 max-w-2xl">
+          <p className="mt-4 text-lg sm:text-xl leading-8 text-zinc-400 max-w-2xl">
             We bridge the gap between universities and playful coding. Instructors create custom curriculums, students master them through daily challenges.
           </p>
 
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto px-4">
             <a 
               href="/auth"
-              className="w-full sm:w-auto rounded-full bg-white px-10 py-4 text-base font-bold text-black shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:scale-105 transition-all"
+              className="w-full sm:w-auto rounded-full bg-white px-8 sm:px-10 py-4 text-base font-bold text-black shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:scale-105 transition-all text-center"
             >
               Start Learning Free
             </a>
             <a 
               href="/tutor"
-              className="w-full sm:w-auto rounded-full border border-zinc-700 bg-zinc-900/50 px-10 py-4 text-base font-bold text-white hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-auto rounded-full border border-zinc-700 bg-zinc-900/50 px-8 sm:px-10 py-4 text-base font-bold text-white hover:bg-zinc-800 transition-all flex items-center justify-center gap-2"
             >
               For Educators <School size={18} />
             </a>
@@ -128,14 +128,14 @@ export default function Page() {
       </div>
 
       {/* The Blueberry Difference */}
-      <section className="flex min-h-screen w-full snap-start flex-col items-center justify-center bg-black/80 backdrop-blur-sm px-4 py-32 text-center z-10 border-t border-zinc-900">
+      <section className="flex min-h-[80vh] sm:min-h-screen w-full flex-col items-center justify-center bg-black/80 backdrop-blur-sm px-4 py-20 sm:py-32 text-center z-10 border-t border-zinc-900">
         <div className="max-w-7xl">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-24">
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-12 sm:mb-24">
             The Blueberry Difference
           </h2>
-          <div className="grid gap-8 sm:grid-cols-3 text-left">
+          <div className="grid gap-6 sm:gap-8 sm:grid-cols-3 text-left">
             
-            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
+            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-8 sm:p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/20 text-blue-400 border border-blue-500/30">
                 <School size={28} />
               </div>
@@ -145,7 +145,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
+            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-8 sm:p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30">
                 <Rocket size={28} />
               </div>
@@ -155,7 +155,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
+            <div className="group relative rounded-3xl border border-zinc-800 bg-zinc-900/50 p-8 sm:p-10 shadow-2xl hover:bg-zinc-900 transition-colors">
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                 <Sparkles size={28} />
               </div>
@@ -170,19 +170,19 @@ export default function Page() {
       </section>
 
       {/* Built for Everyone Section */}
-      <section className="flex w-full snap-start flex-col items-center justify-center bg-black px-4 py-32 text-center z-10 border-t border-zinc-900">
-        <div className="max-w-4xl p-12 rounded-[40px] bg-gradient-to-b from-zinc-900/50 to-transparent border border-white/5 shadow-2xl relative overflow-hidden">
+      <section className="flex w-full flex-col items-center justify-center bg-black px-4 py-24 sm:py-32 text-center z-10 border-t border-zinc-900">
+        <div className="max-w-4xl p-8 sm:p-12 rounded-[30px] sm:rounded-[40px] bg-gradient-to-b from-zinc-900/50 to-transparent border border-white/5 shadow-2xl relative overflow-hidden">
             {/* Background Glow */}
             <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px]" />
             
             <div className="relative z-10">
-                <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-8">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-5xl mb-6 sm:mb-8">
                     Coding for <span className="text-blue-500 underline decoration-blue-500/30 underline-offset-8">Everyone</span>
                 </h2>
-                <p className="text-xl text-zinc-300 leading-relaxed max-w-2xl mx-auto">
+                <p className="text-lg sm:text-xl text-zinc-300 leading-relaxed max-w-2xl mx-auto">
                     Even if you're not a student, you can use Blueberry. We are a code-learning platform with challenges and learning paths for everyone – our main focus is to teach programming to anyone.
                 </p>
-                <div className="mt-10 flex flex-wrap justify-center gap-4 text-sm font-bold uppercase tracking-widest text-zinc-500">
+                <div className="mt-8 sm:mt-10 flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] sm:tracking-widest text-zinc-500">
                     <span>Self-Learners</span>
                     <span className="text-zinc-800">•</span>
                     <span>Hobbyists</span>
@@ -194,23 +194,23 @@ export default function Page() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="flex min-h-screen w-full snap-start flex-col items-center justify-center bg-black px-4 py-32 text-center overflow-hidden z-10 border-t border-zinc-900">
+      <section id="pricing" className="flex min-h-[80vh] sm:min-h-screen w-full flex-col items-center justify-center bg-black px-4 py-24 sm:py-32 text-center overflow-hidden z-10 border-t border-zinc-900">
         <div className="max-w-6xl w-full">
-          <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 sm:mb-6">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-zinc-400 mb-20 text-lg">
+          <p className="text-zinc-400 mb-12 sm:mb-20 text-base sm:text-lg">
             Invest in your future. Start for free, upgrade for mastery.
           </p>
           
-          <div className="grid gap-8 sm:grid-cols-3 items-start">
+          <div className="grid gap-6 sm:gap-8 sm:grid-cols-3 items-start">
              
              {/* Free Tier */}
-             <div className="rounded-3xl border border-zinc-800 bg-zinc-900/20 p-8 flex flex-col items-center hover:border-zinc-700 transition-colors">
+             <div className="rounded-3xl border border-zinc-800 bg-zinc-900/20 p-6 sm:p-8 flex flex-col items-center hover:border-zinc-700 transition-colors">
                 <h3 className="text-xl font-bold text-white mb-2">Student Basic</h3>
                 <div className="text-4xl font-bold text-white mb-6">Free</div>
                 <div className="w-full h-[1px] bg-zinc-800 mb-6" />
-                <ul className="space-y-4 text-left w-full text-zinc-400 mb-8 flex-1">
+                <ul className="space-y-3 sm:space-y-4 text-left w-full text-zinc-400 mb-8 flex-1 text-sm sm:text-base">
                     <li className="flex items-center gap-3"><Hourglass size={18} className="text-blue-500" /> 10 Lives / day</li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-zinc-600" /> Refill 1 life every 3h</li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-zinc-600" /> Watch ads to refill</li>
@@ -222,14 +222,14 @@ export default function Page() {
              </div>
 
              {/* Pro Tier (Highlight) */}
-             <div className="relative rounded-3xl border border-blue-500/50 bg-zinc-900/80 p-8 flex flex-col items-center shadow-2xl shadow-blue-900/20 transform sm:-translate-y-4">
+             <div className="relative rounded-3xl border border-blue-500/50 bg-zinc-900/80 p-6 sm:p-8 flex flex-col items-center shadow-2xl shadow-blue-900/20 transform sm:-translate-y-4">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                     Most Popular
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Pro Scholar</h3>
                 <div className="text-4xl font-bold text-white mb-6">7,99€ <span className="text-lg text-zinc-500 font-normal">/mo</span></div>
                 <div className="w-full h-[1px] bg-zinc-800 mb-6" />
-                <ul className="space-y-4 text-left w-full text-zinc-300 mb-8 flex-1">
+                <ul className="space-y-3 sm:space-y-4 text-left w-full text-zinc-300 mb-8 flex-1 text-sm sm:text-base">
                     <li className="flex items-center gap-3"><Infinity size={18} className="text-blue-400" /> <strong>Unlimited Lives</strong></li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-blue-500" /> No Ads</li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-blue-500" /> Offline Mode</li>
@@ -242,11 +242,11 @@ export default function Page() {
              </div>
 
              {/* Institution Tier */}
-             <div className="rounded-3xl border border-zinc-800 bg-zinc-900/20 p-8 flex flex-col items-center hover:border-zinc-700 transition-colors">
+             <div className="rounded-3xl border border-zinc-800 bg-zinc-900/20 p-6 sm:p-8 flex flex-col items-center hover:border-zinc-700 transition-colors">
                 <h3 className="text-xl font-bold text-white mb-2">Schools & Unis</h3>
                 <div className="text-4xl font-bold text-white mb-6">Custom</div>
                 <div className="w-full h-[1px] bg-zinc-800 mb-6" />
-                <ul className="space-y-4 text-left w-full text-zinc-400 mb-8 flex-1">
+                <ul className="space-y-3 sm:space-y-4 text-left w-full text-zinc-400 mb-8 flex-1 text-sm sm:text-base">
                     <li className="flex items-center gap-3"><Infinity size={18} className="text-emerald-500" /> Unlimited Lives for all students</li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-zinc-600" /> Custom Curriculum Dashboard</li>
                     <li className="flex items-center gap-3"><Check size={18} className="text-zinc-600" /> Detailed Analytics</li>
@@ -262,7 +262,7 @@ export default function Page() {
       </section>
 
       {/* Where do we operate */}
-      <section className="flex min-h-screen w-full snap-start flex-col items-center justify-center bg-black/80 px-4 py-32 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
+      <section className="flex min-h-screen w-full snap-start flex-col items-center justify-center bg-black/80 px-4 py-24 sm:py-32 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
         <div className="max-w-7xl w-full flex flex-col items-center">
           <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-8">
             Global Presence
@@ -273,13 +273,13 @@ export default function Page() {
           
           <div className="flex w-full flex-col items-center lg:flex-row lg:justify-between gap-12">
              {/* Globe */}
-            <div className="relative flex h-[600px] w-full max-w-[600px] items-center justify-center lg:w-1/2">
+            <div className="relative flex h-[320px] w-full max-w-[360px] sm:h-[420px] sm:max-w-[480px] lg:h-[600px] lg:max-w-[600px] items-center justify-center lg:w-1/2">
                <Globe className="h-full w-full" focus={focus} markers={markers} />
             </div>
 
             {/* Country List */}
             <div className="flex w-full flex-col items-center justify-center gap-6 lg:w-1/2 lg:items-start lg:pl-12">
-              <p className="text-lg text-zinc-500 mb-8 text-center lg:text-left">
+              <p className="text-base sm:text-lg text-zinc-500 mb-4 sm:mb-8 text-center lg:text-left">
                 Hover over a region to explore our active campuses.
               </p>
               
@@ -320,34 +320,39 @@ export default function Page() {
       </section>
       
       {/* Timeline Section */}
-      <section className="flex w-full snap-start flex-col items-center justify-center bg-black/80 px-4 py-32 pb-48 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
+      <section className="flex min-h-[70vh] sm:min-h-screen w-full flex-col items-center justify-center bg-black/80 px-4 py-16 sm:py-32 pb-24 sm:pb-48 text-center backdrop-blur-sm z-10 border-t border-zinc-900">
         <div className="max-w-5xl w-full">
-            <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-24">
+            <h2 className="text-3xl sm:text-5xl font-bold tracking-tight mb-12 sm:mb-24">
                 Roadmap to Excellence
             </h2>
 
             <div className="relative">
                 {/* Central Line */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600/30" />
+                <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-600/30 hidden sm:block" />
 
-                <div className="flex flex-col gap-24 relative">
+                <div className="flex flex-col gap-14 sm:gap-24 relative">
                     {events.map((event, index) => (
-                        <div key={event.id} className={`flex items-center justify-between w-full ${index % 2 === 0 ? "flex-row-reverse" : ""}`}>
+                        <div key={event.id} className={`flex items-center justify-between w-full ${index % 2 === 0 ? "flex-row-reverse" : ""} sm:flex-row`}>
                             
                             {/* Date Label (Opposite side) */}
-                            <div className={`w-5/12 flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}>
+                            <div className={`w-5/12 hidden sm:flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}>
                                 <span className={`text-sm font-bold tracking-wider ${event.highlight ? "bg-white text-black px-3 py-1 rounded-full shadow-lg" : "text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full"}`}>
                                     {event.date}
                                 </span>
                             </div>
+                            <div className="w-full sm:w-0 flex sm:hidden justify-center mb-3">
+                              <span className={`text-xs font-semibold tracking-wider ${event.highlight ? "bg-white text-black px-3 py-1 rounded-full shadow-lg" : "text-zinc-400 border border-zinc-800 px-3 py-1 rounded-full"}`}>
+                                {event.date}
+                              </span>
+                            </div>
 
                             {/* Center Dot */}
-                            <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
+                            <div className="absolute left-1/2 transform -translate-x-1/2 z-10 hidden sm:block">
                                 <div className={`w-4 h-4 rounded-full border-2 ${event.highlight ? "bg-white border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]" : "bg-black border-blue-600"}`} />
                             </div>
 
                             {/* Content Card */}
-                            <div className="w-5/12">
+                            <div className="w-full sm:w-5/12">
                                 <div className={`p-6 rounded-2xl border ${event.highlight ? "bg-zinc-900 border-blue-500/30 shadow-2xl shadow-blue-900/10" : "bg-zinc-900/40 border-zinc-800"}`}>
                                     <h3 className={`text-lg font-bold mb-2 ${event.highlight ? "text-white" : "text-zinc-200"}`}>
                                         {event.title}

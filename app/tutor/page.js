@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { useState } from "react";
 import { Breadcrumbs, BreadcrumbItem, Button } from "@heroui/react";
 import {
@@ -64,12 +64,12 @@ const stats = [
 ];
 
 export default function TutorDashboard() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
         {/* Grid Background */}

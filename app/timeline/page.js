@@ -1,10 +1,9 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
-import { useState } from "react";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 
 export default function TimelinePage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
 
   const events = [
     {
@@ -46,7 +45,7 @@ export default function TimelinePage() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative bg-zinc-950">
         <header className="h-14 border-b border-zinc-900 flex items-center px-4 gap-4 bg-zinc-950/50 backdrop-blur-sm sticky top-0 z-10">

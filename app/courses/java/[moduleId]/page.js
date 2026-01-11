@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../../../components/Sidebar";
 import { useState, useEffect, use, useRef } from "react";
 import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 import Link from "next/link";
@@ -70,7 +70,7 @@ const courseModules = {
 // 3D Hexagon Node Component with black/white aesthetic
 const HexagonNode = ({ lesson, position, moduleId, mounted, isHovered, onHover, index }) => {
   const { x, y } = position;
-  const size = lesson.type === "finish" ? 48 : 44;
+  const size = lesson.type === "finish" ? 64 : 58;
 
   const getNodeColors = () => {
     if (lesson.status === "locked") {
@@ -295,7 +295,7 @@ const ConnectionPath = ({ from, to, status }) => {
 export default function ModulePathPage({ params }) {
   const unwrappedParams = use(params);
   const { moduleId } = unwrappedParams;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [mounted, setMounted] = useState(false);
   const [hoveredNode, setHoveredNode] = useState(null);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
@@ -321,15 +321,15 @@ export default function ModulePathPage({ params }) {
       branches: [],
     };
 
-    const centerX = 350; // Center position in viewBox
-    const startY = 80;
-    const verticalSpacing = 120;
-    const branchOffsetX = 140;
+    const centerX = 250; // Center position in viewBox
+    const startY = 100;
+    const verticalSpacing = 140;
+    const branchOffsetX = 160;
 
     lessons.forEach((lesson, index) => {
       // Slight zigzag for visual interest, but keep centered
       const isEven = index % 2 === 0;
-      const wiggle = index > 0 && index < lessons.length - 1 ? (isEven ? -15 : 15) : 0;
+      const wiggle = index > 0 && index < lessons.length - 1 ? (isEven ? -20 : 20) : 0;
 
       const nodePos = {
         x: centerX + wiggle,
@@ -346,7 +346,7 @@ export default function ModulePathPage({ params }) {
         const branchSide = index % 2 === 0 ? -1 : 1;
         const branchPos = {
           x: nodePos.x + (branchOffsetX * branchSide),
-          y: nodePos.y - 20,
+          y: nodePos.y - 30,
         };
 
         layout.branches.push({
@@ -372,7 +372,7 @@ export default function ModulePathPage({ params }) {
       to: layout.nodes[conn.toIndex]?.position,
     }));
 
-    layout.totalHeight = startY + lessons.length * verticalSpacing + 60;
+    layout.totalHeight = startY + lessons.length * verticalSpacing + 100;
 
     return layout;
   };
@@ -398,7 +398,7 @@ export default function ModulePathPage({ params }) {
   };
 
   return (
-    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
+    <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans justify-center">
       <style jsx global>{`
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
@@ -427,9 +427,9 @@ export default function ModulePathPage({ params }) {
         }
       `}</style>
 
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
-      <main className="flex-1 h-full overflow-hidden flex flex-col relative bg-black">
+      <main className="flex-1 h-full overflow-hidden flex flex-col relative bg-black max-w-[420px] sm:max-w-none">
         {/* Grid Background */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Large grid */}
@@ -464,19 +464,20 @@ export default function ModulePathPage({ params }) {
         </div>
 
         {/* Header */}
-        <header className="h-14 border-b border-zinc-900 flex items-center px-4 gap-4 bg-zinc-950/80 backdrop-blur-sm sticky top-0 z-50">
+        <header className="h-14 border-b border-zinc-900 flex items-center px-3 sm:px-4 gap-3 bg-zinc-950/80 backdrop-blur-sm sticky top-0 z-50">
           <SidebarTrigger onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
           <div className="h-4 w-[1px] bg-zinc-800" />
           <Breadcrumbs
             variant="light"
             classNames={{ list: "gap-2" }}
             itemClasses={{
-              item: "text-zinc-500 data-[current=true]:text-white text-sm transition-colors",
+              item: "text-zinc-500 data-[current=true]:text-white text-sm transition-colors max-w-[120px] truncate",
               separator: "text-zinc-700"
             }}
           >
-            <BreadcrumbItem href="/courses">Kurse</BreadcrumbItem>
-            <BreadcrumbItem href="/courses/java">Java</BreadcrumbItem>
+            <BreadcrumbItem className="hidden sm:inline" href="/dashboard">Dashboard</BreadcrumbItem>
+            <BreadcrumbItem className="hidden sm:inline" href="/courses">Kurse</BreadcrumbItem>
+            <BreadcrumbItem className="hidden sm:inline" href="/courses/java">Java</BreadcrumbItem>
             <BreadcrumbItem>{moduleConfig.title}</BreadcrumbItem>
           </Breadcrumbs>
         </header>
@@ -524,7 +525,7 @@ export default function ModulePathPage({ params }) {
         {/* Scrollable Content */}
         <div
           ref={scrollRef}
-          className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin relative"
+          className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin relative px-4 sm:px-0"
         >
           {/* Section Title */}
           <div className="pt-10 pb-6">
@@ -542,15 +543,13 @@ export default function ModulePathPage({ params }) {
 
           {/* SVG Canvas - Centered */}
           <div
-            className="relative mx-auto"
+            className="relative mx-auto w-full max-w-[500px]"
             style={{
               height: layout.totalHeight,
-              width: '700px',
-              maxWidth: '100%',
             }}
           >
             <svg
-              viewBox="0 0 700 ${layout.totalHeight}"
+              viewBox={`0 0 500 ${layout.totalHeight}`}
               className="absolute top-0 left-0 w-full h-full"
               style={{ minHeight: layout.totalHeight }}
               preserveAspectRatio="xMidYMin meet"

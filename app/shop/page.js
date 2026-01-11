@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { PageTopBar } from "../../components/PageTopBar";
 import { useState } from "react";
 import { Breadcrumbs, BreadcrumbItem, Button } from "@heroui/react";
@@ -135,7 +135,7 @@ const rarityColors = {
 };
 
 export default function ShopPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [activeCategory, setActiveCategory] = useState("all");
   const [hoveredItem, setHoveredItem] = useState(null);
   const userBalance = 1240;
@@ -146,7 +146,7 @@ export default function ShopPage() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
         {/* Subtle grid background */}

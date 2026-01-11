@@ -1,11 +1,11 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { useState } from "react";
 import { Breadcrumbs, BreadcrumbItem, Tabs, Tab, Button, Input, Switch, User } from "@heroui/react";
 import { Palette, User as UserIcon, Shield, CreditCard, ShoppingBag, Gift } from "lucide-react";
 
 export default function SettingsPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
 
   const shopItems = [
     { id: 1, name: "Neon Frame", type: "Avatar Frame", price: 150, image: "https://i.imgur.com/8Q5QY5M.png", color: "bg-purple-500/20 text-purple-400" },
@@ -16,7 +16,7 @@ export default function SettingsPage() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
         <header className="h-14 border-b border-zinc-900 flex items-center px-4 gap-4 bg-zinc-950/50 backdrop-blur-sm sticky top-0 z-10">

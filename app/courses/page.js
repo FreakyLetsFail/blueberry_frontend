@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarTrigger } from "../../components/Sidebar";
+import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { Plus, Lock, Key } from "lucide-react";
 import { useState } from "react";
 import { Breadcrumbs, BreadcrumbItem, Tabs, Tab, InputOtp, Button } from "@heroui/react";
@@ -19,7 +19,7 @@ const RustIcon = ({ size = 24, className = "" }) => (
 );
 
 export default function CoursesPage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState();
   const [otpValue, setOtpValue] = useState("");
 
   const courses = [
@@ -64,10 +64,10 @@ export default function CoursesPage() {
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
-      {isSidebarOpen && <Sidebar />}
+      <Sidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
       
       <main className="flex-1 h-full overflow-y-auto flex flex-col relative">
-        <header className="h-14 border-b border-zinc-900 flex items-center px-4 gap-4 bg-zinc-950/50 backdrop-blur-sm sticky top-0 z-10">
+        <header className="h-14 border-b border-zinc-900 flex items-center px-3 sm:px-4 gap-3 bg-zinc-950/50 backdrop-blur-sm sticky top-0 z-10">
             <SidebarTrigger onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
             <div className="h-4 w-[1px] bg-zinc-800" />
             <Breadcrumbs 
@@ -80,13 +80,13 @@ export default function CoursesPage() {
                     separator: "text-zinc-700"
                 }}
               >
-                <BreadcrumbItem>Platform</BreadcrumbItem>
+                <BreadcrumbItem href="/dashboard">Dashboard</BreadcrumbItem>
                 <BreadcrumbItem>Courses</BreadcrumbItem>
               </Breadcrumbs>
         </header>
 
-        <div className="p-8">
-            <header className="mb-10">
+        <div className="p-4 sm:p-8 max-w-4xl mx-auto w-full">
+            <header className="mb-8 sm:mb-10 text-center sm:text-left">
                 <h1 className="text-3xl font-bold mb-1 tracking-tight">Your Courses</h1>
                 <p className="text-zinc-500">Manage and access your enrolled courses.</p>
             </header>
@@ -96,10 +96,10 @@ export default function CoursesPage() {
                 variant="underlined"
                 classNames={{
                     base: "w-full mb-8",
-                    tabList: "gap-6 w-full relative rounded-none p-0 border-b border-zinc-800",
+                    tabList: "gap-4 sm:gap-6 w-full relative rounded-none p-0 border-b border-zinc-800 overflow-x-auto no-scrollbar",
                     cursor: "w-full bg-white",
                     tab: "max-w-fit px-0 h-12",
-                    tabContent: "group-data-[selected=true]:text-white text-zinc-500 font-medium transition-colors"
+                    tabContent: "group-data-[selected=true]:text-white text-zinc-500 font-medium transition-colors whitespace-nowrap"
                 }}
             >
                 <Tab key="our-courses" title="Our Courses">
@@ -167,12 +167,12 @@ export default function CoursesPage() {
                 </Tab>
 
                 <Tab key="private-courses" title="Private Courses">
-                    <div className="flex flex-col items-center justify-center py-20 border border-zinc-900 rounded-3xl bg-zinc-950/20 max-w-4xl mx-auto w-full">
+                    <div className="flex flex-col items-center justify-center py-14 sm:py-20 border border-zinc-900 rounded-3xl bg-zinc-950/20 max-w-4xl mx-auto w-full px-4">
                         <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-xl">
                             <Key size={32} className="text-blue-500" />
                         </div>
-                        <h2 className="text-2xl font-bold mb-2">Join a Private Course</h2>
-                        <p className="text-zinc-500 mb-10 text-center max-w-md">
+                        <h2 className="text-2xl font-bold mb-2 text-center">Join a Private Course</h2>
+                        <p className="text-zinc-500 mb-8 sm:mb-10 text-center max-w-md">
                             Enter the 16-digit access code provided by your instructor or institution to unlock the course material.
                         </p>
                         
@@ -185,8 +185,8 @@ export default function CoursesPage() {
                                 size="lg"
                                 allowedKeys="^[a-zA-Z0-9]*$"
                                 classNames={{
-                                    segment: "w-8 h-14 text-lg font-bold bg-zinc-900 border-zinc-800 data-[active=true]:border-blue-500 transition-all",
-                                    segmentWrapper: "gap-1" 
+                                    segment: "w-6 h-12 text-base font-bold bg-zinc-900 border-zinc-800 data-[active=true]:border-blue-500 transition-all",
+                                    segmentWrapper: "gap-1 flex-wrap justify-center" 
                                 }}
                             />
                             
