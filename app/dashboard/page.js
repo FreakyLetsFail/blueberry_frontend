@@ -1,10 +1,9 @@
 "use client";
 import { Sidebar, SidebarTrigger, useResponsiveSidebarState } from "../../components/Sidebar";
 import { PageTopBar } from "../../components/PageTopBar";
-import { useState } from "react";
-import { BreadcrumbItem, Button, Input } from "@heroui/react";
+import { BreadcrumbItem, Button } from "@heroui/react";
 import { LineChart, Line, XAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
-import { Coins, Users, Copy, Check, UserPlus } from "lucide-react";
+import { Coins } from "lucide-react";
 
 const data = [
   { name: 'Mon', value: 35 },
@@ -28,22 +27,6 @@ const CustomDot = (props) => {
 
 export default function Dashboard() {
   const { open: isSidebarOpen, setOpen: setIsSidebarOpen } = useResponsiveSidebarState(true, false);
-  const [copied, setCopied] = useState(false);
-  const [friendId, setFriendId] = useState("");
-  const userId = "USR-7X9K2M4P";
-
-  const copyUserId = () => {
-    navigator.clipboard.writeText(userId);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const addFriend = () => {
-    if (friendId.trim()) {
-      console.log("Adding friend:", friendId);
-      setFriendId("");
-    }
-  };
 
   return (
     <div className="flex h-screen w-full bg-black text-white overflow-hidden font-sans">
